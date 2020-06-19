@@ -7,7 +7,7 @@ const initialColor = {
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors, refresh }) => {
+const ColorList = ({ colors, updateColors, setRefresh, refresh }) => {
   console.log(colors);
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
@@ -27,7 +27,7 @@ const ColorList = ({ colors, updateColors, refresh }) => {
     })
     .catch(err => console.log(err))
     .finally(()=> {
-      refresh(!refresh)
+      setRefresh(!refresh)
     })
     
   };
@@ -40,7 +40,7 @@ const ColorList = ({ colors, updateColors, refresh }) => {
     })
     .catch(err => console.log(err))
     .finally(()=> {
-      refresh(!refresh)
+      setRefresh(!refresh)
     })
     
   };
