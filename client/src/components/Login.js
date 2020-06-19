@@ -1,14 +1,63 @@
-import React from "react";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 const Login = () => {
-  // make a post request to retrieve a token from the api
-  // when you have handled the token, navigate to the BubblePage route
-  return (
-    <>
-      <h1>Welcome to the Bubble App!</h1>
-      <p>Build a login page here</p>
-    </>
-  );
+
+    const [credentials, setCredentials] = useState({
+        username: '',
+        password: '',
+    });
+
+    const { push } = useHistory();
+    
+    const handleChange = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        
+        setCredentials({
+            ...credentials,
+            [name]: value
+        })
+    };
+
+    const login = e => {
+        e.preventDefault();
+        axiosWithAuth()
+        .post('/api/login', credentials)
+        .then(res => {
+            console.log(res);
+            window.localStorage.setItem("token", res.data.payload);
+            push('/bubblepage');
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    };
+
+
+    return (
+        <div className='form-container'>
+            <h6>Sign In</h6>
+            <form onSubmit={login}>
+                <label>Username</label> 
+                <input
+                    type="text"
+                    name="username"
+                    value={credentials.username}
+                    onChange={handleChange}
+                />
+            <label>Password</label>
+            <input
+                type="password"
+                name="password"
+                value={credentials.password}
+                onChange={handleChange}
+            />
+            <button>Log in</button>
+            </form>
+        </div>
+    );
 };
 
 export default Login;
