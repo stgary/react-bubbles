@@ -9,7 +9,7 @@ const Login = () => {
         password: '',
     });
 
-    const { push } = useHistory();
+    const history = useHistory();
     
     const handleChange = e => {
         const name = e.target.name;
@@ -28,7 +28,7 @@ const Login = () => {
         .then(res => {
             console.log(res);
             window.localStorage.setItem("token", res.data.payload);
-            push('/bubblepage');
+            history.push('/bubblepage');
         })
         .catch(err => {
             console.log(err);
