@@ -24,18 +24,25 @@ const ColorList = ({ colors, updateColors, refresh }) => {
     .then(res => {
       console.log(res)
         setEditing(false);
-        refresh(!refresh)
     })
     .catch(err => console.log(err))
+    .finally(()=> {
+      refresh(!refresh)
+    })
+    
   };
 
   const deleteColor = color => {
     axiosWithAuth()
     .delete(`/api/colors/${color.id}`)
     .then(res => {
-      refresh(!refresh)
+      console.log(res)
     })
     .catch(err => console.log(err))
+    .finally(()=> {
+      refresh(!refresh)
+    })
+    
   };
 
   return (
